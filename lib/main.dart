@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _intnetos = 0;
+  int _intnetos = 5;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
   List<String> _mayor=[];
@@ -44,12 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
       _valorBarra = newValue;
       if (_valorBarra <= 1) {
         dificultad = 'Facil';
+        _intnetos= 5;
       } else if (_valorBarra <= 2) {
         dificultad = 'Medio';
+        _intnetos = 8;
       } else if (_valorBarra <= 3) {
         dificultad = 'Avanzado';
+        _intnetos = 15;
       } else {
         dificultad = 'Extremo';
+        _intnetos = 25;
       }
     });
   }
@@ -104,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           Text(
-                            '10',
+                            _intnetos.toString(),
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                         ],
