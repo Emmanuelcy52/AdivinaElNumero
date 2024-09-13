@@ -35,6 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _intnetos = 0;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
+  List<String> _mayor=[];
+  List<String> _menos=[];
+  List<String> _exacto=[];
 
   void _ActualizarBarra(double newValue) {
     setState(() {
@@ -123,10 +126,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      'mayor que',
-                      style:
+                    child: Column(
+                      children: [
+                        Text(
+                          'mayor que',
+                          style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _mayor.length,
+                              itemBuilder: (context, index){
+                                return ListTile(
+                                  title: Text(
+                                    _mayor[index],
+                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
                     ),
                     margin: EdgeInsets.all(10.0),
                   ),
