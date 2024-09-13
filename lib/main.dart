@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _valorBarra = newValue;
     });
   }
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -53,113 +55,126 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(width: 80),
+                Expanded(
+                  child: Container(
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      decoration: InputDecoration(
+                        labelText: 'ingresa el numero',
+                        fillColor: Colors.transparent,
+                        border:OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        )
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'intentos',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            Text(
+                              '10',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.orange,
-                        child: Text(
-                          'intentos echos',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
-                        ),
-                      ),
-                    ],
+                  child: Container(
+                    height: 225,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      'mayor que',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    margin: EdgeInsets.all(10.0),
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.deepOrange,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'ingresa el numero',
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: Container(
+                    height: 225,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      'menor que',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    margin: EdgeInsets.all(10.0),
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.cyan,
-                        child: Text('intentos restantes',
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.black)),
-                      )
-                    ],
+                  child: Container(
+                    height: 225,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      'Historial',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    margin: EdgeInsets.all(10.0),
                   ),
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.yellow,
-                        child: Text('mayor'),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.yellow,
-                        child: Text('menor'),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.yellow,
-                        child: Text('Juegos'),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
               children: [
-                SizedBox(height: 20,),
-                Slider(value: _valorBarra, onChanged: _ActualizarBarra,
-                min: 0,
-                max: 5,
-                divisions: 3,
-                label: _valorBarra.toStringAsFixed(2),)
+                SizedBox(height: 20),
+                Expanded(
+                    child: Slider(
+                  value: _valorBarra,
+                  onChanged: _ActualizarBarra,
+                  min: 0,
+                  max: 5,
+                  divisions: 3,
+                  label: _valorBarra.toStringAsFixed(2),
+                ))
               ],
             )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
