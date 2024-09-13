@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _numeroUser = TextEditingController();
   int _intnetos = 5;
   String? _mensajeError;
-  int Adivina = 0;
+  int Adivina = 1;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
   List<String> _mayor = [];
@@ -53,30 +53,21 @@ class _MyHomePageState extends State<MyHomePage> {
         Adivina = numrandom.nextInt(10) + 1;
         dificultad = 'Facil';
         _intnetos = 5;
-        if(Adivina == 0){
-          Adivina + 1;
-        }
       } else if (_valorBarra <= 2) {
         Adivina = numrandom.nextInt(20) + 1;
         dificultad = 'Medio';
         _intnetos = 8;
-        if(Adivina == 0){
-          Adivina + 1;
-        }
       } else if (_valorBarra <= 3) {
         Adivina = numrandom.nextInt(100) + 1;
         dificultad = 'Avanzado';
         _intnetos = 15;
-        if(Adivina == 0){
-          Adivina + 1;
-        }
       } else {
         Adivina = numrandom.nextInt(1000) + 1;
         dificultad = 'Extremo';
         _intnetos = 25;
-        if(Adivina == 0){
-          Adivina + 1;
-        }
+      }
+      if(Adivina == 0){
+        Adivina = 1;
       }
     });
   }
