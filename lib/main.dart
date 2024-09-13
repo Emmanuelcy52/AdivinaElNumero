@@ -33,7 +33,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _numeroUser = TextEditingController();
   int _intnetos = 5;
+  String? _mensajeError;
   int Adivina = 0;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
@@ -43,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _ActualizarBarra(double newValue) {
     var numrandom = Random();
+    Adivina = numrandom.nextInt(10)+1;
     setState(() {
       _valorBarra = newValue;
       if (_valorBarra <= 1) {
@@ -62,6 +65,25 @@ class _MyHomePageState extends State<MyHomePage> {
         dificultad = 'Extremo';
         _intnetos = 25;
       }
+    });
+  }
+
+  void _validarNumero(int numeroUser){
+    setState(() {
+      if( numeroUser < Adivina){
+        _mayor.add(numeroUser.toString());
+      }else if ( numeroUser > Adivina){
+        _menos.add(numeroUser.toString());
+      }else{
+        _exacto.add(numeroUser.toString());
+      }
+      if(_intnetos == 0){
+        _exacto.add(Adivina.toString());
+        _mayor=[];
+        _menos=[];
+        return;
+      }
+      _RestarIntentos();
     });
   }
 
@@ -91,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Container(
                     child: TextFormField(
+                      controller: _numeroUser,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -100,7 +123,22 @@ class _MyHomePageState extends State<MyHomePage> {
                           fillColor: Colors.transparent,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                          )),
+                          ),
+                        errorText: _mensajeError,
+                      ),
+                      onFieldSubmitted: (value) {
+                        if(value.isEmpty){
+                          setState(() {
+                            _mensajeError = 'Por favor, ingresa un número';
+                          });
+                        }else {
+                          setState(() {
+                            _mensajeError = null;
+                          });
+                          int numeroIngresado = int.parse(value);
+                          _validarNumero(numeroIngresado);
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -170,10 +208,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      'menor que',
-                      style:
+                    child: Column(
+                      children: [
+                        Text(
+                          'menor que',
+                          style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: _menos.length,
+                              itemBuilder: (context, index){
+                                return ListTile(
+                                  title: Text(
+                                    _menos[index],
+                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
                     ),
                     margin: EdgeInsets.all(10.0),
                   ),
@@ -186,10 +241,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      'Historial',
-                      style:
+                    child: Column(
+                      children: [
+                        Text(
+                          'historial',
+                          style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: _exacto.length,
+                              itemBuilder: (context, index){
+                                return ListTile(
+                                  title: Text(
+                                    _exacto[index],
+                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
                     ),
                     margin: EdgeInsets.all(10.0),
                   ),
