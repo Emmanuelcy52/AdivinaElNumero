@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> _mayor = [];
   List<String> _menos = [];
   List<Map<String, dynamic>> _historial = [];
+  bool JugoEstado = true;
 
   void _ActualizarBarra(double newValue) {
     var numrandom = Random();
@@ -52,44 +53,58 @@ class _MyHomePageState extends State<MyHomePage> {
         Adivina = numrandom.nextInt(10) + 1;
         dificultad = 'Facil';
         _intnetos = 5;
+        if(Adivina == 0){
+          Adivina + 1;
+        }
       } else if (_valorBarra <= 2) {
         Adivina = numrandom.nextInt(20) + 1;
         dificultad = 'Medio';
         _intnetos = 8;
+        if(Adivina == 0){
+          Adivina + 1;
+        }
       } else if (_valorBarra <= 3) {
         Adivina = numrandom.nextInt(100) + 1;
         dificultad = 'Avanzado';
         _intnetos = 15;
+        if(Adivina == 0){
+          Adivina + 1;
+        }
       } else {
         Adivina = numrandom.nextInt(1000) + 1;
         dificultad = 'Extremo';
         _intnetos = 25;
+        if(Adivina == 0){
+          Adivina + 1;
+        }
       }
     });
   }
 
   void _validarNumero(int numeroUser) {
+    JugoEstado = false;
     setState(() {
+      if (_intnetos <= 1) {
+        _RestarIntentos();
+        _historial.add({
+          'numero': Adivina.toString(),
+          'color': Colors.red
+        });
+        _ReiniciarJuego();
+        return;
+      }
       if (numeroUser < Adivina) {
         _mayor.add(numeroUser.toString());
+        _numeroUser.clear();
       } else if (numeroUser > Adivina) {
         _menos.add(numeroUser.toString());
+        _numeroUser.clear();
       } else {
         _historial.add({
           'numero': numeroUser.toString(),
           'color': Colors.green
         });
-        _mayor = [];
-        _menos = [];
-        return;
-      }
-      if (_intnetos == 0) {
-        _historial.add({
-          'numero': Adivina.toString(),
-          'color': Colors.red
-        });
-        _mayor = [];
-        _menos = [];
+        _ReiniciarJuego();
         return;
       }
       _RestarIntentos();
@@ -99,6 +114,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void _RestarIntentos() {
     setState(() {
       _intnetos--;
+    });
+  }
+
+  void _ReiniciarJuego() {
+    setState(() {
+      JugoEstado = true;
+      _numeroUser.clear();
+      _mayor = [];
+      _menos = [];
+      _valorBarra = 0.0;
+      _ActualizarBarra(_valorBarra);
     });
   }
 
@@ -128,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       decoration: InputDecoration(
-                        labelText: 'ingresa el numero',
+                        labelText: 'numero',
                         fillColor: Colors.transparent,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -312,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Slider(
                     value: _valorBarra,
-                    onChanged: _ActualizarBarra,
+                    onChanged: JugoEstado ? _ActualizarBarra : null,
                     min: 0,
                     max: 4,
                     divisions: 3,
