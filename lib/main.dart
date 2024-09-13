@@ -166,6 +166,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           setState(() {
                             _mensajeError = 'Por favor, ingresa un número';
                           });
+                        }else if (int.tryParse(value) == 0){
+                          setState(() {
+                            _mensajeError= 'No coloques 0';
+                          });
                         } else {
                           setState(() {
                             _mensajeError = null;
