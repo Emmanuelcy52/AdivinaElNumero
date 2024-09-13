@@ -39,48 +39,48 @@ class _MyHomePageState extends State<MyHomePage> {
   int Adivina = 0;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
-  List<String> _mayor=[];
-  List<String> _menos=[];
-  List<String> _exacto=[];
+  List<String> _mayor = [];
+  List<String> _menos = [];
+  List<String> _exacto = [];
 
   void _ActualizarBarra(double newValue) {
     var numrandom = Random();
-    Adivina = numrandom.nextInt(10)+1;
+    Adivina = numrandom.nextInt(10) + 1;
     setState(() {
       _valorBarra = newValue;
       if (_valorBarra <= 1) {
-        Adivina = numrandom.nextInt(10)+1;
+        Adivina = numrandom.nextInt(10) + 1;
         dificultad = 'Facil';
-        _intnetos= 5;
+        _intnetos = 5;
       } else if (_valorBarra <= 2) {
-        Adivina = numrandom.nextInt(20)+1;
+        Adivina = numrandom.nextInt(20) + 1;
         dificultad = 'Medio';
         _intnetos = 8;
       } else if (_valorBarra <= 3) {
-        Adivina = numrandom.nextInt(100)+1;
+        Adivina = numrandom.nextInt(100) + 1;
         dificultad = 'Avanzado';
         _intnetos = 15;
       } else {
-        Adivina = numrandom.nextInt(1000)+1;
+        Adivina = numrandom.nextInt(1000) + 1;
         dificultad = 'Extremo';
         _intnetos = 25;
       }
     });
   }
 
-  void _validarNumero(int numeroUser){
+  void _validarNumero(int numeroUser) {
     setState(() {
-      if( numeroUser < Adivina){
+      if (numeroUser < Adivina) {
         _mayor.add(numeroUser.toString());
-      }else if ( numeroUser > Adivina){
+      } else if (numeroUser > Adivina) {
         _menos.add(numeroUser.toString());
-      }else{
+      } else {
         _exacto.add(numeroUser.toString());
       }
-      if(_intnetos == 0){
+      if (_intnetos == 0) {
         _exacto.add(Adivina.toString());
-        _mayor=[];
-        _menos=[];
+        _mayor = [];
+        _menos = [];
         return;
       }
       _RestarIntentos();
@@ -119,19 +119,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       decoration: InputDecoration(
-                          labelText: 'ingresa el numero',
-                          fillColor: Colors.transparent,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+                        labelText: 'ingresa el numero',
+                        fillColor: Colors.transparent,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         errorText: _mensajeError,
                       ),
                       onFieldSubmitted: (value) {
-                        if(value.isEmpty){
+                        if (value.isEmpty) {
                           setState(() {
                             _mensajeError = 'Por favor, ingresa un número';
                           });
-                        }else {
+                        } else {
                           setState(() {
                             _mensajeError = null;
                           });
@@ -179,18 +179,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           'mayor que',
-                          style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: _mayor.length,
-                              itemBuilder: (context, index){
+                              itemCount: _mayor.length,
+                              itemBuilder: (context, index) {
                                 return ListTile(
                                   title: Text(
                                     _mayor[index],
-                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.cyan),
+                                    textAlign: TextAlign.center,
                                   ),
                                 );
                               }),
@@ -212,18 +214,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           'menor que',
-                          style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(
                               itemCount: _menos.length,
-                              itemBuilder: (context, index){
+                              itemBuilder: (context, index) {
                                 return ListTile(
                                   title: Text(
                                     _menos[index],
-                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.cyan),
+                                    textAlign: TextAlign.center,
                                   ),
                                 );
                               }),
@@ -245,18 +249,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           'historial',
-                          style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(
                               itemCount: _exacto.length,
-                              itemBuilder: (context, index){
+                              itemBuilder: (context, index) {
                                 return ListTile(
                                   title: Text(
                                     _exacto[index],
-                                    style: TextStyle(fontSize: 15, color: Colors.cyan),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.cyan),
+                                    textAlign: TextAlign.center,
                                   ),
                                 );
                               }),
