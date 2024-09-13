@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _intnetos = 5;
+  int Adivina = 0;
   double _valorBarra = 0.0;
   String dificultad = 'Facil';
   List<String> _mayor=[];
@@ -40,18 +42,23 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> _exacto=[];
 
   void _ActualizarBarra(double newValue) {
+    var numrandom = Random();
     setState(() {
       _valorBarra = newValue;
       if (_valorBarra <= 1) {
+        Adivina = numrandom.nextInt(10)+1;
         dificultad = 'Facil';
         _intnetos= 5;
       } else if (_valorBarra <= 2) {
+        Adivina = numrandom.nextInt(20)+1;
         dificultad = 'Medio';
         _intnetos = 8;
       } else if (_valorBarra <= 3) {
+        Adivina = numrandom.nextInt(100)+1;
         dificultad = 'Avanzado';
         _intnetos = 15;
       } else {
+        Adivina = numrandom.nextInt(1000)+1;
         dificultad = 'Extremo';
         _intnetos = 25;
       }
