@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String dificultad = 'Facil';
   List<String> _mayor = [];
   List<String> _menos = [];
-  List<String> _exacto = [];
+  List<Map<String, dynamic>> _historial = [];
 
   void _ActualizarBarra(double newValue) {
     var numrandom = Random();
@@ -75,10 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
       } else if (numeroUser > Adivina) {
         _menos.add(numeroUser.toString());
       } else {
-        _exacto.add(numeroUser.toString());
+        _historial.add({
+          'numero': numeroUser.toString(),
+          'color': Colors.green
+        });
+        _mayor = [];
+        _menos = [];
+        return;
       }
       if (_intnetos == 0) {
-        _exacto.add(Adivina.toString());
+        _historial.add({
+          'numero': Adivina.toString(),
+          'color': Colors.red
+        });
         _mayor = [];
         _menos = [];
         return;
@@ -254,18 +263,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         SizedBox(height: 20),
                         Expanded(
-                          child: ListView.builder(
-                              itemCount: _exacto.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(
-                                    _exacto[index],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: _historial.map((intento) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '${intento['numero']}',
                                     style: TextStyle(
-                                        fontSize: 15, color: Colors.cyan),
+                                      fontSize: 15,
+                                      color: intento['color'],
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 );
-                              }),
+                              }).toList(),
+                            ),
+                          ),
                         ),
                       ],
                     ),
