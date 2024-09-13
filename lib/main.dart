@@ -32,7 +32,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  double _valorBarra = 0.0;
 
+  void _ActualizarBarra(double newValue) {
+    setState(() {
+      _valorBarra = newValue;
+    });
+  }
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -98,41 +104,54 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: Colors.yellow,
-                      child: Text('mayor'),
-                    )
-                  ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        color: Colors.yellow,
+                        child: Text('mayor'),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    color: Colors.yellow,
-                    child: Text('menor'),
-                  )
-                ],
-              ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: Colors.yellow,
-                      child: Text('Juegos'),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        color: Colors.yellow,
+                        child: Text('menor'),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ])
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        color: Colors.yellow,
+                        child: Text('Juegos'),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(height: 20,),
+                Slider(value: _valorBarra, onChanged: _ActualizarBarra,
+                min: 0,
+                max: 5,
+                divisions: 3,
+                label: _valorBarra.toStringAsFixed(2),)
+              ],
+            )
           ],
         ),
       ),
