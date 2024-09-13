@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Adivina el numero demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
         useMaterial3: true,
@@ -221,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: Text(
                                     _mayor[index],
                                     style: TextStyle(
-                                        fontSize: 15, color: Colors.cyan),
+                                        fontSize: 15, color: Colors.black),
                                     textAlign: TextAlign.center,
                                   ),
                                 );
@@ -256,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: Text(
                                     _menos[index],
                                     style: TextStyle(
-                                        fontSize: 15, color: Colors.cyan),
+                                        fontSize: 15, color: Colors.black),
                                     textAlign: TextAlign.center,
                                   ),
                                 );
@@ -319,7 +320,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         dificultad,
-                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        style: TextStyle(fontSize: 15, color: Colors.black,fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
