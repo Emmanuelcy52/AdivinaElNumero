@@ -32,18 +32,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _intnetos = 0;
   double _valorBarra = 0.0;
+  String dificultad = 'Facil';
 
   void _ActualizarBarra(double newValue) {
     setState(() {
       _valorBarra = newValue;
+      if (_valorBarra <= 1) {
+        dificultad = 'Facil';
+      } else if (_valorBarra <= 2) {
+        dificultad = 'Medio';
+      } else if (_valorBarra <= 3) {
+        dificultad = 'Avanzado';
+      } else {
+        dificultad = 'Extremo';
+      }
     });
   }
 
-  void _incrementCounter() {
+  void _RestarIntentos() {
     setState(() {
-      _counter++;
+      _intnetos--;
     });
   }
 
@@ -72,33 +82,31 @@ class _MyHomePageState extends State<MyHomePage> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       decoration: InputDecoration(
-                        labelText: 'ingresa el numero',
-                        fillColor: Colors.transparent,
-                        border:OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        )
-                      ),
+                          labelText: 'ingresa el numero',
+                          fillColor: Colors.transparent,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          )),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'intentos',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                            Text(
-                              '10',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ],
-                        )),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'intentos',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                          Text(
+                            '10',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -162,14 +170,31 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 SizedBox(height: 20),
                 Expanded(
-                    child: Slider(
-                  value: _valorBarra,
-                  onChanged: _ActualizarBarra,
-                  min: 0,
-                  max: 5,
-                  divisions: 3,
-                  label: _valorBarra.toStringAsFixed(2),
-                ))
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        dificultad,
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Expanded(
+                  child: Slider(
+                    value: _valorBarra,
+                    onChanged: _ActualizarBarra,
+                    min: 0,
+                    max: 4,
+                    divisions: 3,
+                  ),
+                ),
               ],
             )
           ],
